@@ -1,0 +1,16 @@
+name: SimpleHub
+main: Terpz710\SimpleHub\Main
+version: 1.0.0
+api: 5.0.0
+author: Terpz710
+description: Simple hubs plugin for Pocketmine-MP
+permissions:
+  sethub.command:
+    description: Allows players to use the /sethub command
+    default: op
+  deletehub.command:
+    description: Allows players to use the /deletehub command
+    default: op
+  hub.command:
+    description: Allows players to use the /hub command
+    default: true
