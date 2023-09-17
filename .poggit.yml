@@ -5,4 +5,5 @@ branches:
 projects:
   SimpleHub:
     path: ""
+    icon: icon.png
 ...
