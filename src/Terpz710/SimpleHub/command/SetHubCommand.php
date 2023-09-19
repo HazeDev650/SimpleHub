@@ -10,21 +10,17 @@ use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
 use pocketmine\math\Vector3;
 use Terpz710\SimpleHub\Main;
-use pocketmine\plugin\PluginOwned;
-use pocketmine\plugin\PluginOwnedTrait;
 
-class SetHubCommand extends Command implements PluginOwned {
-    use PluginOwnedTrait;
+class SetHubCommand extends Command {
 
-    public function __construct(Main $plugin) {
+    public function __construct() {
         parent::__construct(
             "sethub",
             "Set the hub",
             "/sethub <x> <y> <z>",
             ["setlobby", "setspawn"]
         );
-        $this->setPermission("sethub.command");
-        $this->getOwningPlugin($plugin);
+        $this->setPermission("simplehub.sethub");
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
