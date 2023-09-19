@@ -9,21 +9,17 @@ use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
 use Terpz710\SimpleHub\Main;
-use pocketmine\plugin\PluginOwned;
-use pocketmine\plugin\PluginOwnedTrait;
 
-class HubCommand extends Command implements PluginOwned {
-    use PluginOwnedTrait;
+class HubCommand extends Command {
 
-    public function __construct(Main $plugin) {
+    public function __construct() {
         parent::__construct(
             "hub",
             "Teleport to hub",
             "/hub",
             ["lobby", "spawn"]
         );
-        $this->setPermission("hub.command");
-        $this->getOwningPlugin($plugin);
+        $this->setPermission("simplehub.hub");
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
