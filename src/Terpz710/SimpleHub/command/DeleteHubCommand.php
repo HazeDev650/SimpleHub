@@ -23,7 +23,7 @@ class DeleteHubCommand extends Command implements PluginOwned {
             ["removehub"]
         );
         $this->setPermission("deletehub.command");
-        $this->OwningPlugin($plugin);
+        $this->getOwningPlugin($plugin);
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
