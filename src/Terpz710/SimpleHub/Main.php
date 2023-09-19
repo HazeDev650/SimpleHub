@@ -19,10 +19,9 @@ class Main extends PluginBase implements Listener {
     private $worldManager;
 
     public function onEnable() : void {
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getServer()->getCommandMap()->register("hub", new HubCommand());
-        $this->getServer()->getCommandMap()->register("sethub", new SetHubCommand());
-        $this->getServer()->getCommandMap()->register("deletehub", new DeleteHubCommand());
+        $this->getServer()->getCommandMap()->register("SimpleHub", new HubCommand());
+        $this->getServer()->getCommandMap()->register("SimpleHub", new SetHubCommand());
+        $this->getServer()->getCommandMap()->register("SimpleHub", new DeleteHubCommand());
         $this->getWorldManager()->getDefaultWorld();
     }
 
