@@ -5,12 +5,12 @@ api: 5.0.0
 author: Terpz710
 description: Simple hubs plugin for Pocketmine-MP
 permissions:
-  sethub.command:
+  simplehub.sethub:
     description: Allows players to use the /sethub command
     default: op
-  deletehub.command:
+  simplehub.deletehub:
     description: Allows players to use the /deletehub command
     default: op
-  hub.command:
+  simplehub.hub:
     description: Allows players to use the /hub command
     default: true
