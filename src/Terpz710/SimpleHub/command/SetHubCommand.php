@@ -24,7 +24,7 @@ class SetHubCommand extends Command implements PluginOwned {
             ["setlobby", "setspawn"]
         );
         $this->setPermission("sethub.command");
-        $this->setOwningPlugin($plugin);
+        $this->getOwningPlugin($plugin);
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
