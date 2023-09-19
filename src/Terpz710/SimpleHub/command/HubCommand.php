@@ -23,7 +23,7 @@ class HubCommand extends Command implements PluginOwned {
             ["lobby", "spawn"]
         );
         $this->setPermission("hub.command");
-        $this->setOwningPlugin($plugin);
+        $this->getOwningPlugin($plugin);
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
