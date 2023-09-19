@@ -9,10 +9,13 @@ use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
 use Terpz710\SimpleHub\Main;
+use pocketmine\plugin\PluginOwned;
+use pocketmine\plugin\PluginOwnedTrait;
 
-class DeleteHubCommand extends Command {
+class DeleteHubCommand extends Command implements PluginOwned {
+    use PluginOwnedTrait;
 
-    public function __construct() {
+    public function __construct(Main $plugin) {
         parent::__construct(
             "deletehub",
             "Delete the hub location",
@@ -20,6 +23,7 @@ class DeleteHubCommand extends Command {
             ["removehub"]
         );
         $this->setPermission("deletehub.command");
+        $this->setOwningPlugin($plugin);
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
