@@ -7,7 +7,6 @@ namespace Terpz710\SimpleHub;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\TextFormat;
 use pocketmine\world\WorldManager;
 use Terpz710\SimpleHub\command\HubCommand;
 use Terpz710\SimpleHub\command\SetHubCommand;
@@ -19,9 +18,9 @@ class Main extends PluginBase implements Listener {
     private $worldManager;
 
     public function onEnable() : void {
-        $this->getServer()->getCommandMap()->register("SimpleHub", new HubCommand());
-        $this->getServer()->getCommandMap()->register("SimpleHub", new SetHubCommand());
-        $this->getServer()->getCommandMap()->register("SimpleHub", new DeleteHubCommand());
+        $this->getServer()->getCommandMap()->register("SimpleHub", new HubCommand($this));
+        $this->getServer()->getCommandMap()->register("SimpleHub", new SetHubCommand($this));
+        $this->getServer()->getCommandMap()->register("SimpleHub", new DeleteHubCommand($this));
         $this->getWorldManager()->getDefaultWorld();
     }
 
