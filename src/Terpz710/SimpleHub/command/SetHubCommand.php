@@ -9,11 +9,13 @@ use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
 use pocketmine\math\Vector3;
+use pocketmine\plugin\PluginOwned;
 use Terpz710\SimpleHub\Main;
 
 class SetHubCommand extends Command {
+    use PluginOwned;
 
-    public function __construct() {
+    public function __construct(Main $plugin) {
         parent::__construct(
             "sethub",
             "Set the hub",
@@ -21,6 +23,7 @@ class SetHubCommand extends Command {
             ["setlobby", "setspawn"]
         );
         $this->setPermission("simplehub.sethub");
+        $this->setOwningPlugin($plugin)
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
