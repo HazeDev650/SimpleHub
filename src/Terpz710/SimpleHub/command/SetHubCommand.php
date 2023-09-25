@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Terpz710\SimpleHub\command;
 
 use pocketmine\command\Command;
-use pocketmine\command.CommandSender;
+use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
 use pocketmine\math\Vector3;
