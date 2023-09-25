@@ -5,23 +5,24 @@ declare(strict_types=1);
 namespace Terpz710\SimpleHub\command;
 
 use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
+use pocketmine\command.CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
+use pocketmine\math\Vector3;
 use pocketmine\plugin\PluginOwned;
 use Terpz710\SimpleHub\Main;
 
-class HubCommand extends Command implements PluginOwned {
+class SetHubCommand extends Command implements PluginOwned {
     private $plugin;
 
     public function __construct(Main $plugin) {
         parent::__construct(
-            "hub",
-            "Teleport to hub",
-            "/hub",
-            ["lobby", "spawn"]
+            "sethub",
+            "Set the hub",
+            "/sethub <x> <y> <z>",
+            ["setlobby", "setspawn"]
         );
-        $this->setPermission("simplehub.hub");
+        $this->setPermission("simplehub.sethub");
         $this->plugin = $plugin;
     }
 
@@ -35,21 +36,25 @@ class HubCommand extends Command implements PluginOwned {
         }
 
         if ($sender instanceof Player) {
-            $originWorld = $this->plugin->getOriginWorld($sender);
+            if (isset($args[0]) && isset($args[1]) && isset($args[2])) {
+                $x = (float)$args[0];
+                $y = (float)$args[1];
+                $z = (float)$args[2];
 
-            if ($originWorld !== null) {
-                if ($this->plugin->isHubLocationSet($originWorld)) {
-                    $hubLocation = $this->plugin->getHubLocation($originWorld);
-                    $sender->teleport($hubLocation);
-                    $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub in world $originWorld");
-                } else {
-                    $sender->sendMessage(TextFormat::RED . "Hub location is not set for the origin world.");
-                }
+                $pos = new Vector3($x, $y, $z);
+                $pos->round();
+
+                $world = $sender->getWorld();
+                $worldName = $world->getFolderName();
+
+                $this->plugin->setHubLocation($worldName, $pos);
+
+                $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z) in world $worldName");
             } else {
-                $sender->sendMessage(TextFormat::RED . "Your origin world is not set. Use /sethub to set it.");
+                $sender->sendMessage(TextFormat::RED . "Please enter all three coordinates");
             }
         } else {
-            $sender->sendMessage(TextFormat::RED . "This command can only be used by a player");
+            $sender->sendMessage(TextFormat::RED . "This command can only be used by players");
         }
     }
 }
