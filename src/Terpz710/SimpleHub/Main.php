@@ -17,9 +17,10 @@ class Main extends PluginBase implements Listener {
 
     /** @var WorldManager */
     private $worldManager;
-    
-    // Store hub locations for each world
+
     private $hubLocations = [];
+
+    private $originWorlds = [];
 
     public function onEnable() : void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -45,6 +46,14 @@ class Main extends PluginBase implements Listener {
 
     public function getHubLocation(string $worldName): ?Vector3 {
         return $this->hubLocations[$worldName] ?? null;
+    }
+
+    public function setOriginWorld(Player $player, string $worldName) {
+        $this->originWorlds[$player->getName()] = $worldName;
+    }
+
+    public function getOriginWorld(Player $player): ?string {
+        return $this->originWorlds[$player->getName()] ?? null;
     }
 
     public function getWorldManager(): WorldManager {
