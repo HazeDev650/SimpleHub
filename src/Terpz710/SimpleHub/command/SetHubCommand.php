@@ -23,7 +23,7 @@ class SetHubCommand extends Command {
             ["setlobby", "setspawn"]
         );
         $this->setPermission("simplehub.sethub");
-        $this->setOwningPlugin($plugin)
+        $this->setOwningPlugin($plugin);
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
