@@ -8,6 +8,7 @@ use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\world\WorldManager;
+use pocketmine\math\Vector3;
 use Terpz710\SimpleHub\command\HubCommand;
 use Terpz710\SimpleHub\command\SetHubCommand;
 use Terpz710\SimpleHub\command\DeleteHubCommand;
