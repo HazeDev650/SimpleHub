@@ -12,8 +12,8 @@ use pocketmine\math\Vector3;
 use pocketmine\plugin\PluginOwned;
 use Terpz710\SimpleHub\Main;
 
-class SetHubCommand extends Command {
-    use PluginOwned;
+class SetHubCommand extends Command implements PluginOwned {
+    private $plugin;
 
     public function __construct(Main $plugin) {
         parent::__construct(
@@ -23,7 +23,11 @@ class SetHubCommand extends Command {
             ["setlobby", "setspawn"]
         );
         $this->setPermission("simplehub.sethub");
-        $this->setOwningPlugin($plugin);
+        $this->plugin = $plugin;
+    }
+
+    public function getOwningPlugin(): \pocketmine\plugin\Plugin {
+        return $this->plugin;
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
