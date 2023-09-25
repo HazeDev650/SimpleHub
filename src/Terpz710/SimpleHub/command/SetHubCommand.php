@@ -14,6 +14,7 @@ use Terpz710\SimpleHub\Main;
 
 class SetHubCommand extends Command implements PluginOwned {
     private $plugin;
+    private $originWorld;
 
     public function __construct(Main $plugin) {
         parent::__construct(
@@ -48,6 +49,8 @@ class SetHubCommand extends Command implements PluginOwned {
                 $worldName = $world->getFolderName();
 
                 $this->plugin->setHubLocation($worldName, $pos);
+
+                $this->originWorld = $worldName;
 
                 $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z) in world $worldName");
             } else {
