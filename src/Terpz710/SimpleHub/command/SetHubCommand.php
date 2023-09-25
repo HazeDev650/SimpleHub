@@ -19,7 +19,7 @@ class SetHubCommand extends Command implements PluginOwned {
         parent::__construct(
             "sethub",
             "Set the hub",
-            "/sethub <x> <y> <z>",
+            "/sethub <x> <y> <z> <world>",
             ["setlobby", "setspawn"]
         );
         $this->setPermission("simplehub.sethub");
@@ -36,23 +36,21 @@ class SetHubCommand extends Command implements PluginOwned {
         }
 
         if ($sender instanceof Player) {
-            if (isset($args[0]) && isset($args[1]) && isset($args[2])) {
+            if (isset($args[0]) && isset($args[1]) && isset($args[2]) && isset($args[3])) {
                 $x = (float)$args[0];
                 $y = (float)$args[1];
                 $z = (float)$args[2];
+                $worldName = $args[3];
 
                 $pos = new Vector3($x, $y, $z);
                 $pos->round();
-
-                $world = $sender->getWorld();
-                $worldName = $world->getFolderName();
 
                 $this->plugin->setHubLocation($worldName, $pos);
                 $this->plugin->setOriginWorld($sender, $worldName); // Set the origin world for the player
 
                 $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z) in world $worldName");
             } else {
-                $sender->sendMessage(TextFormat::RED . "Please enter all three coordinates");
+                $sender->sendMessage(TextFormat::RED . "Please enter all three coordinates and the world name");
             }
         } else {
             $sender->sendMessage(TextFormat::RED . "This command can only be used by players");
