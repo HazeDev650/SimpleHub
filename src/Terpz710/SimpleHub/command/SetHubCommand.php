@@ -45,8 +45,11 @@ class SetHubCommand extends Command implements PluginOwned {
                 $pos->round();
 
                 $world = $sender->getWorld();
-                $world->setSpawnLocation($pos);
-                $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z)");
+                $worldName = $world->getName();
+
+                $this->plugin->setHubLocation($worldName, $pos);
+
+                $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z) in world $worldName");
             } else {
                 $sender->sendMessage(TextFormat::RED . "Please enter all three coordinates");
             }
