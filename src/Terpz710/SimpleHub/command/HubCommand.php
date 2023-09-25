@@ -11,8 +11,8 @@ use pocketmine\player\Player;
 use pocketmine\plugin\PluginOwned;
 use Terpz710\SimpleHub\Main;
 
-class HubCommand extends Command {
-    use PluginOwned;
+class HubCommand extends Command implements PluginOwned {
+    private $plugin;
 
     public function __construct(Main $plugin) {
         parent::__construct(
@@ -22,7 +22,11 @@ class HubCommand extends Command {
             ["lobby", "spawn"]
         );
         $this->setPermission("simplehub.hub");
-        $this->setOwningPlugin($plugin);
+        $this->plugin = $plugin;
+    }
+
+    public function getOwningPlugin(): \pocketmine\plugin\Plugin {
+        return $this->plugin;
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
@@ -33,7 +37,7 @@ class HubCommand extends Command {
         if ($sender instanceof Player) {
             $spawnLocation = $sender->getWorld()->getSpawnLocation();
             $sender->teleport($spawnLocation);
-            $sender->sendMessage(TextFormat::GREEN . "You have been teleported to hub");
+            $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub");
         } else {
             $sender->sendMessage(TextFormat::RED . "This command can only be used by a player");
         }
