@@ -35,15 +35,18 @@ class HubCommand extends Command implements PluginOwned {
         }
 
         if ($sender instanceof Player) {
-            $world = $sender->getWorld();
-            $worldName = $world->getFolderName();
-            
-            if ($this->plugin->isHubLocationSet($worldName)) {
-                $hubLocation = $this->plugin->getHubLocation($worldName);
-                $sender->teleport($hubLocation);
-                $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub in world $worldName");
+            $originWorld = $this->plugin->getOriginWorld($sender);
+
+            if ($originWorld !== null) {
+                if ($this->plugin->isHubLocationSet($originWorld)) {
+                    $hubLocation = $this->plugin->getHubLocation($originWorld);
+                    $sender->teleport($hubLocation);
+                    $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub in world $originWorld");
+                } else {
+                    $sender->sendMessage(TextFormat::RED . "Hub location is not set for the origin world.");
+                }
             } else {
-                $sender->sendMessage(TextFormat::RED . "Hub location is not set for this world.");
+                $sender->sendMessage(TextFormat::RED . "Your origin world is not set. Use /sethub to set it.");
             }
         } else {
             $sender->sendMessage(TextFormat::RED . "This command can only be used by a player");
