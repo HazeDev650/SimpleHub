@@ -36,7 +36,7 @@ class HubCommand extends Command implements PluginOwned {
 
         if ($sender instanceof Player) {
             $world = $sender->getWorld();
-            $worldName = $world->getName();
+            $worldName = $world->getWorldByName();
             
             if ($this->plugin->isHubLocationSet($worldName)) {
                 $hubLocation = $this->plugin->getHubLocation($worldName);
