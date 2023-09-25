@@ -22,7 +22,11 @@ class DeleteHubCommand extends Command {
             ["removehub"]
         );
         $this->setPermission("simplehub.deletehub");
-        $this->setOwningPlugin($plugin);
+        $this->ownedPlugin = $main;
+    }
+
+    public function getOwningPlugin(): Plugin {
+        return $this->ownedPlugin;
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
