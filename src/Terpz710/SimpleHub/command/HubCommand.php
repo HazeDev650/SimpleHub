@@ -18,7 +18,7 @@ class HubCommand extends Command implements PluginOwned {
         parent::__construct(
             "hub",
             "Teleport to hub",
-            "/hub",
+            "/hub <world>",
             ["lobby", "spawn"]
         );
         $this->setPermission("simplehub.hub");
@@ -35,18 +35,18 @@ class HubCommand extends Command implements PluginOwned {
         }
 
         if ($sender instanceof Player) {
-            $originWorld = $this->plugin->getOriginWorld($sender);
+            if (isset($args[0])) {
+                $worldName = $args[0];
 
-            if ($originWorld !== null) {
-                if ($this->plugin->isHubLocationSet($originWorld)) {
-                    $hubLocation = $this->plugin->getHubLocation($originWorld);
+                if ($this->plugin->isHubLocationSet($worldName)) {
+                    $hubLocation = $this->plugin->getHubLocation($worldName);
                     $sender->teleport($hubLocation);
-                    $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub in world $originWorld");
+                    $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub in world $worldName");
                 } else {
-                    $sender->sendMessage(TextFormat::RED . "Hub location is not set for the origin world.");
+                    $sender->sendMessage(TextFormat::RED . "Hub location is not set for the specified world.");
                 }
             } else {
-                $sender->sendMessage(TextFormat::RED . "Your origin world is not set. Use /sethub to set it.");
+                $sender->sendMessage(TextFormat::RED . "Please specify the world to teleport to using /hub <world>");
             }
         } else {
             $sender->sendMessage(TextFormat::RED . "This command can only be used by a player");
