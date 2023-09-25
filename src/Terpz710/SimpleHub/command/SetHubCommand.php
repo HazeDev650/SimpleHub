@@ -8,12 +8,12 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
-use pocketmine\plugin\Plugin;
+use pocketmine\math\Vector3;
 use pocketmine\plugin\PluginOwned;
 use Terpz710\SimpleHub\Main;
 
-class SetHubCommand extends Command implements PluginOwned {
-    private $plugin;
+class SetHubCommand extends Command {
+    use PluginOwned;
 
     public function __construct(Main $plugin) {
         parent::__construct(
@@ -23,11 +23,7 @@ class SetHubCommand extends Command implements PluginOwned {
             ["setlobby", "setspawn"]
         );
         $this->setPermission("simplehub.sethub");
-        $this->plugin = $plugin;
-    }
-
-    public function getOwningPlugin(): \pocketmine\plugin\Plugin {
-        return $this->plugin;
+        $this->setOwningPlugin($plugin);
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
@@ -41,10 +37,11 @@ class SetHubCommand extends Command implements PluginOwned {
                 $y = (float)$args[1];
                 $z = (float)$args[2];
 
-                $pos = new \pocketmine\math\Vector3($x, $y, $z);
+                $pos = new Vector3($x, $y, $z);
                 $pos->round();
 
-                $sender->getWorld()->setSpawnLocation($pos);
+                $world = $sender->getWorld();
+                $world->setSpawnLocation($pos);
                 $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z)");
             } else {
                 $sender->sendMessage(TextFormat::RED . "Please enter all three coordinates");
