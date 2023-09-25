@@ -6,6 +6,7 @@ namespace Terpz710\SimpleHub;
 
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\Listener;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\world\WorldManager;
 use pocketmine\math\Vector3;
