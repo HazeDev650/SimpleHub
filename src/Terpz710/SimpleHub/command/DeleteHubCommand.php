@@ -8,12 +8,11 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
-use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
 use Terpz710\SimpleHub\Main;
 
-class DeleteHubCommand extends Command {
-    use PluginOwned;
+class DeleteHubCommand extends Command implements PluginOwned {
+    private $plugin;
 
     public function __construct(Main $plugin) {
         parent::__construct(
@@ -23,7 +22,11 @@ class DeleteHubCommand extends Command {
             ["removehub"]
         );
         $this->setPermission("simplehub.deletehub");
-        $this->ownedPlugin = $plugin;
+        $this->plugin = $plugin;
+    }
+
+    public function getOwningPlugin(): \pocketmine\plugin\Plugin {
+        return $this->plugin;
     }
 
     public function execute(CommandSender $sender, string $label, array $args) {
