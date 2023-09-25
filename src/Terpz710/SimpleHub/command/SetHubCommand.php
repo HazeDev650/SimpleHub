@@ -45,7 +45,7 @@ class SetHubCommand extends Command implements PluginOwned {
                 $pos->round();
 
                 $world = $sender->getWorld();
-                $worldName = $world->getName();
+                $worldName = $world->getFolderName();
 
                 $this->plugin->setHubLocation($worldName, $pos);
 
