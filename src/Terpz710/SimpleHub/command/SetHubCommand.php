@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Terpz710\SimpleHub\command;
 
 use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
+use pocketmine\command.CommandSender;
 use pocketmine\utils\TextFormat;
 use pocketmine\player\Player;
 use pocketmine\math\Vector3;
@@ -14,7 +14,6 @@ use Terpz710\SimpleHub\Main;
 
 class SetHubCommand extends Command implements PluginOwned {
     private $plugin;
-    private $originWorld;
 
     public function __construct(Main $plugin) {
         parent::__construct(
@@ -46,11 +45,9 @@ class SetHubCommand extends Command implements PluginOwned {
                 $pos->round();
 
                 $world = $sender->getWorld();
-                $worldName = $world->getFolderName();
+                $worldName = $world->getName();
 
                 $this->plugin->setHubLocation($worldName, $pos);
-
-                $this->originWorld = $worldName;
 
                 $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z) in world $worldName");
             } else {
