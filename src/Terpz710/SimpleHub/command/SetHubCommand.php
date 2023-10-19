@@ -50,6 +50,8 @@ class SetHubCommand extends Command implements PluginOwned {
                 $this->plugin->setOriginWorld($sender, $sender->getWorld()->getFolderName());
 
                 $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z) in world $worldName");
+
+                $this->plugin->saveHubLocations();
             } else {
                 $sender->sendMessage(TextFormat::RED . "Please enter all three coordinates and the world name");
             }
