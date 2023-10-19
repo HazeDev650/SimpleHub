@@ -10,6 +10,7 @@ use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\world\WorldManager;
 use pocketmine\math\Vector3;
+use pocketmine\utils\Config;
 use Terpz710\SimpleHub\command\HubCommand;
 use Terpz710\SimpleHub\command\SetHubCommand;
 use Terpz710\SimpleHub\command\DeleteHubCommand;
@@ -29,7 +30,6 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getCommandMap()->register("SimpleHub", new SetHubCommand($this));
         $this->getServer()->getCommandMap()->register("SimpleHub", new DeleteHubCommand($this));
         $this->getWorldManager()->getDefaultWorld();
-        
         $this->loadHubLocations();
     }
 
@@ -41,6 +41,7 @@ class Main extends PluginBase implements Listener {
 
     public function setHubLocation(string $worldName, Vector3 $location) {
         $this->hubLocations[$worldName] = $location;
+        $this->saveHubLocations();
     }
 
     public function isHubLocationSet(string $worldName): bool {
@@ -67,6 +68,7 @@ class Main extends PluginBase implements Listener {
     }
 
     public function saveHubLocations() {
+        $config = new Config($this->getDataFolder() . "hublocations.yml", Config::YAML);
         $data = [];
         foreach ($this->hubLocations as $worldName => $location) {
             $data[$worldName] = [
@@ -75,24 +77,19 @@ class Main extends PluginBase implements Listener {
                 'z' => $location->getZ(),
             ];
         }
-
-        $yaml = new \yaml();
-        $yaml->dumpFile($this->getDataFolder() . "hublocations.yml", $data);
+        $config->setAll($data);
+        $config->save();
     }
 
     public function loadHubLocations() {
-        $file = $this->getDataFolder() . "hublocations.yml";
-        if (file_exists($file)) {
-            $data = yaml_parse_file($file);
-            if ($data !== false) {
-                foreach ($data as $worldName => $location) {
-                    $x = $location['x'];
-                    $y = $location['y'];
-                    $z = $location['z'];
-                    $pos = new Vector3($x, $y, $z);
-                    $this->hubLocations[$worldName] = $pos;
-                }
-            }
+        $config = new Config($this->getDataFolder() . "hublocations.yml", Config::YAML);
+        $data = $config->getAll();
+        foreach ($data as $worldName => $location) {
+            $x = $location['x'];
+            $y = $location['y'];
+            $z = $location['z'];
+            $pos = new Vector3($x, $y, $z);
+            $this->hubLocations[$worldName] = $pos;
         }
     }
 }
