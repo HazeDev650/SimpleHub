@@ -40,8 +40,15 @@ class HubCommand extends Command implements PluginOwned {
 
                 if ($this->plugin->isHubLocationSet($worldName)) {
                     $hubLocation = $this->plugin->getHubLocation($worldName);
-                    $sender->teleport($hubLocation);
-                    $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub in world $worldName");
+
+                    $originWorld = $this->plugin->getOriginWorld($sender);
+
+                    if ($originWorld !== null) {
+                        $sender->teleport($hubLocation);
+                        $sender->sendMessage(TextFormat::GREEN . "You have been teleported to the hub in world $worldName");
+                    } else {
+                        $sender->sendMessage(TextFormat::RED . "The origin world is not set. Please use /sethub first.");
+                    }
                 } else {
                     $sender->sendMessage(TextFormat::RED . "Hub location is not set for the specified world.");
                 }
