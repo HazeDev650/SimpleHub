@@ -29,6 +29,8 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getCommandMap()->register("SimpleHub", new SetHubCommand($this));
         $this->getServer()->getCommandMap()->register("SimpleHub", new DeleteHubCommand($this));
         $this->getWorldManager()->getDefaultWorld();
+        
+        $this->loadHubLocations();
     }
 
     public function onPlayerDeath(PlayerDeathEvent $event) {
@@ -62,5 +64,35 @@ class Main extends PluginBase implements Listener {
             $this->worldManager = $this->getServer()->getWorldManager();
         }
         return $this->worldManager;
+    }
+
+    public function saveHubLocations() {
+        $data = [];
+        foreach ($this->hubLocations as $worldName => $location) {
+            $data[$worldName] = [
+                'x' => $location->getX(),
+                'y' => $location->getY(),
+                'z' => $location->getZ(),
+            ];
+        }
+
+        $yaml = new \yaml();
+        $yaml->dumpFile($this->getDataFolder() . "hublocations.yml", $data);
+    }
+
+    public function loadHubLocations() {
+        $file = $this->getDataFolder() . "hublocations.yml";
+        if (file_exists($file)) {
+            $data = yaml_parse_file($file);
+            if ($data !== false) {
+                foreach ($data as $worldName => $location) {
+                    $x = $location['x'];
+                    $y = $location['y'];
+                    $z = $location['z'];
+                    $pos = new Vector3($x, $y, $z);
+                    $this->hubLocations[$worldName] = $pos;
+                }
+            }
+        }
     }
 }
