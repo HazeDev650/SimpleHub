@@ -46,7 +46,8 @@ class SetHubCommand extends Command implements PluginOwned {
                 $pos->round();
 
                 $this->plugin->setHubLocation($worldName, $pos);
-                $this->plugin->setOriginWorld($sender, $worldName); // Set the origin world for the player
+
+                $this->plugin->setOriginWorld($sender, $sender->getWorld()->getFolderName());
 
                 $sender->sendMessage(TextFormat::GREEN . "Hub location set to ($x, $y, $z) in world $worldName");
             } else {
